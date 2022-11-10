@@ -11,6 +11,9 @@ fun User.toDTO(): UserDTO {
         email = this.email,
         name = this.name,
         surname = this.surname,
+        role = this.role,
+        createdAt = this.createdAt,
+        updatedAt = this.updatedAt,
     )
 }
 
@@ -21,5 +24,6 @@ fun UserCreateRequest.toUSER(): User {
         email = this.email,
         name = this.name,
         surname = this.surname,
+        role = this.role,
     )
 }

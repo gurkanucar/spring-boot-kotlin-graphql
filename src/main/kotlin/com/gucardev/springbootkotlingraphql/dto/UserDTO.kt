@@ -1,5 +1,6 @@
 package com.gucardev.springbootkotlingraphql.dto
 
+import com.gucardev.springbootkotlingraphql.model.Role
 import java.time.LocalDateTime
 
 data class UserDTO(
@@ -9,5 +10,6 @@ data class UserDTO(
     val username: String,
     val email: String,
     val name: String? = null,
-    val surname: String? = null
+    val surname: String? = null,
+    val role: Role
 )
