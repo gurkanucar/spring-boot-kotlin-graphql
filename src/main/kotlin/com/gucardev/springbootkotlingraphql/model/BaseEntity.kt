@@ -10,9 +10,7 @@ import javax.persistence.*
 @MappedSuperclass
 abstract class BaseEntity : Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    abstract  var id: Long?
 
     @Column(updatable = false)
     @CreationTimestamp

@@ -3,6 +3,7 @@ package com.gucardev.springbootkotlingraphql.converter
 import com.gucardev.springbootkotlingraphql.dto.UserDTO
 import com.gucardev.springbootkotlingraphql.model.User
 import com.gucardev.springbootkotlingraphql.request.UserCreateRequest
+import com.gucardev.springbootkotlingraphql.request.UserUpdateRequest
 
 fun User.toDTO(): UserDTO {
     return UserDTO(
@@ -24,6 +25,17 @@ fun UserCreateRequest.toUSER(): User {
         email = this.email,
         name = this.name,
         surname = this.surname,
-        role = this.role,
+        role = this.role
+    )
+}
+
+fun UserUpdateRequest.toUser(existing: User): User {
+    return User(
+        id = existing.id,
+        role = existing.role,
+        username = this.username,
+        email = this.email,
+        name = this.name,
+        surname = this.surname
     )
 }

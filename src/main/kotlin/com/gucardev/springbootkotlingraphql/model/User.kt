@@ -1,13 +1,13 @@
 package com.gucardev.springbootkotlingraphql.model
 
-import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "`users`")
 data class User(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    override var id: Long? = null,
     val username: String,
     val email: String,
     val name: String? = null,
