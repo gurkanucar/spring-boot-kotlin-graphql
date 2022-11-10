@@ -32,7 +32,7 @@ fun UserCreateRequest.toUSER(): User {
 fun UserUpdateRequest.toUser(existing: User): User {
     return User(
         id = existing.id,
-        role = existing.role,
+        role = this.role,
         username = this.username,
         email = this.email,
         name = this.name,
