@@ -1,0 +1,36 @@
+scalar LocalTime
+
+type Query {
+    getAllUsers : [UserDTO]
+    getByID(id: ID!) : UserDTO
+}
+
+type Mutation {
+    createUser(createPlayer: UserCreateRequest): UserDTO
+    deleteUser(id: ID!): Boolean
+}
+
+type UserDTO {
+    id: ID
+    username: String
+    createdAt: LocalTime
+    updatedAt: LocalTime
+    email: String
+    name: String
+    surname: String
+    role: Role
+}
+
+enum Role {
+   ADMIN
+   USER
+}
+
+input UserCreateRequest{
+    username: String!
+    email: String!
+    name: String
+    surname: String
+    role: Role
+}
+
