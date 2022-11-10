@@ -16,9 +16,9 @@ abstract class BaseEntity : Serializable {
 
     @Column(updatable = false)
     @CreationTimestamp
-    private val createdAt: LocalDateTime? = null
+    val createdAt: LocalDateTime? = null
 
     @UpdateTimestamp
-    private val updatedAt: LocalDateTime? = null
+     val updatedAt: LocalDateTime? = null
 
 }
