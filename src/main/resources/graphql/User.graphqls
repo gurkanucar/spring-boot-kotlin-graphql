@@ -6,7 +6,8 @@ type Query {
 }
 
 type Mutation {
-    createUser(createPlayer: UserCreateRequest): UserDTO
+    createUser(user: UserCreateRequest): UserDTO
+    updateUser(user: UserUpdateRequest): UserDTO
     deleteUser(id: ID!): Boolean
 }
 
@@ -22,9 +23,19 @@ type UserDTO {
 }
 
 enum Role {
-   ADMIN
-   USER
+    ADMIN
+    USER
 }
+
+input UserUpdateRequest{
+    id:ID!
+    username: String!
+    email: String!
+    name: String
+    surname: String
+    role: Role
+}
+
 
 input UserCreateRequest{
     username: String!
