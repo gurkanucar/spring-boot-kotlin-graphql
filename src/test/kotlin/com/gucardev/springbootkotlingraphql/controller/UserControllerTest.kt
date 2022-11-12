@@ -1,6 +1,9 @@
 package com.gucardev.springbootkotlingraphql.controller
 
 import com.gucardev.springbootkotlingraphql.dto.UserDTO
+import com.gucardev.springbootkotlingraphql.model.Role
+import com.gucardev.springbootkotlingraphql.request.UserCreateRequest
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester
@@ -19,6 +22,20 @@ import org.springframework.test.annotation.DirtiesContext
 internal class UserControllerTest @Autowired constructor(
     private val graphQlTester: GraphQlTester
 ) {
+
+    @BeforeEach
+    fun setUp() {
+        createUser(
+            UserCreateRequest(username = "@grkn", email = "mail1", name = "Gurkan", surname = "UCAR", role = Role.ADMIN)
+        )
+        createUser(
+            UserCreateRequest(
+                username = "@mehmet", email = "mail2", name = "Mehmet", surname = "YILMAZ", role = Role.USER
+            )
+        )
+        println("BEFORE EACH!")
+    }
+
 
     @Test
     fun `should create new user`() {
@@ -45,6 +62,26 @@ internal class UserControllerTest @Autowired constructor(
             .entity(UserDTO::class.java)
 
 
+    }
+
+    private fun createUser(user: UserCreateRequest) {
+        val query: String = """
+            mutation {
+              createUser(
+                user: {username: "${user.username}", email: "${user.email}", role: ${user.role}, name: "${user.name}", surname: "${user.surname}"}
+              ) {
+                id
+                email
+                username
+                createdAt
+                role
+              }
+            }
+      """
+        graphQlTester.document(query)
+            .execute()
+            .path("createUser")
+            .entity(UserDTO::class.java)
     }
 
 }
