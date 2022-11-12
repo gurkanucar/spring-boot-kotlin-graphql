@@ -4,6 +4,7 @@ import com.gucardev.springbootkotlingraphql.dto.UserDTO
 import com.gucardev.springbootkotlingraphql.model.Role
 import com.gucardev.springbootkotlingraphql.model.User
 import com.gucardev.springbootkotlingraphql.request.UserCreateRequest
+import com.gucardev.springbootkotlingraphql.request.UserUpdateRequest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -56,6 +57,35 @@ internal class UserConverterKtTest {
         val actual = userCreateRequest.toUSER()
         assertEquals(expected, actual)
 
+    }
+
+    @Test
+    fun `UserUpdateRequest to User`() {
+        val userUpdateRequest = UserUpdateRequest(
+            id = 1L, username = "grkn_UPDATE",
+            email = "mail1_UPDATE",
+            role = Role.USER,
+            name = "gurkan_UPDATE",
+            surname = "ucar_UPDATE"
+        )
+
+        val existing = User(
+            id = 1L, username = "grkn",
+            email = "mail1",
+            role = Role.ADMIN,
+            name = "gurkan",
+            surname = "ucar"
+        )
+
+        val expected = User(
+            id = 1L, username = "grkn_UPDATE",
+            email = "mail1_UPDATE",
+            role = Role.USER,
+            name = "gurkan_UPDATE",
+            surname = "ucar_UPDATE"
+        )
+        val actual = userUpdateRequest.toUser(existing)
+        assertEquals(expected, actual)
     }
 
 }
