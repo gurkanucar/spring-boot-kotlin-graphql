@@ -36,6 +36,31 @@ internal class UserControllerTest @Autowired constructor(
         println("BEFORE EACH!")
     }
 
+    @Test
+    fun `should return all users`() {
+        val query: String = """
+       query{
+          getAllUsers {
+            id
+            username
+            email
+            role
+            name
+            surname
+            createdAt
+            updatedAt
+          }
+        }
+     """
+
+        graphQlTester.document(query)
+            .execute()
+            .path("getAllUsers")
+            .entityList(UserDTO::class.java)
+            .hasSize(2)
+
+
+    }
 
     @Test
     fun `should create new user`() {
