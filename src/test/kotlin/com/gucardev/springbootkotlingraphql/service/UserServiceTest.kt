@@ -1,11 +1,13 @@
 package com.gucardev.springbootkotlingraphql.service
 
 import com.gucardev.springbootkotlingraphql.converter.toUSER
+import com.gucardev.springbootkotlingraphql.converter.toUser
 import com.gucardev.springbootkotlingraphql.exception.UserNotFoundException
 import com.gucardev.springbootkotlingraphql.model.Role
 import com.gucardev.springbootkotlingraphql.model.User
 import com.gucardev.springbootkotlingraphql.repository.UserRepository
 import com.gucardev.springbootkotlingraphql.request.UserCreateRequest
+import com.gucardev.springbootkotlingraphql.request.UserUpdateRequest
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -72,5 +74,42 @@ internal class UserServiceTest() {
         verify(exactly = 1) { userRepository.save(userCreateRequest.toUSER()) }
         assertEquals(expected, actual)
     }
+
+
+    @Test
+    fun `should update user and return it`() {
+        val userUpdateRequest = UserUpdateRequest(
+            id = 1L, username = "grkn_UPDATE",
+            email = "mail1_UPDATE",
+            role = Role.USER,
+            name = "gurkan_UPDATE",
+            surname = "ucar_UPDATE"
+        )
+
+        val existing = User(
+            id = 1L, username = "grkn",
+            email = "mail1",
+            role = Role.ADMIN,
+            name = "gurkan",
+            surname = "ucar"
+        )
+
+        val expected = User(
+            id = 1L, username = "grkn_UPDATE",
+            email = "mail1_UPDATE",
+            role = Role.USER,
+            name = "gurkan_UPDATE",
+            surname = "ucar_UPDATE"
+        )
+
+        every { userRepository.findById(userUpdateRequest.id) }.returns(Optional.of(existing))
+        every { userRepository.save(any()) }.returns(expected)
+
+        val actual = userService.updateUser(userUpdateRequest)
+        verify(exactly = 1) { userRepository.findById(userUpdateRequest.id) }
+        verify(exactly = 1) { userRepository.save(userUpdateRequest.toUser(existing)) }
+        assertEquals(expected, actual)
+    }
+
 
 }
