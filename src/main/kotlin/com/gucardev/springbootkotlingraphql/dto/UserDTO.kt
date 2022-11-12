@@ -1,12 +1,12 @@
 package com.gucardev.springbootkotlingraphql.dto
 
 import com.gucardev.springbootkotlingraphql.model.Role
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 data class UserDTO(
     var id: Long? = null,
-    val createdAt: LocalDateTime? = null,
-    val updatedAt: LocalDateTime? = null,
+    val createdAt: OffsetDateTime? = null,
+    val updatedAt: OffsetDateTime? = null,
     val username: String,
     val email: String,
     val name: String? = null,

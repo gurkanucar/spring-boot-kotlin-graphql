@@ -3,8 +3,9 @@ package com.gucardev.springbootkotlingraphql.model
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.io.Serializable
-import java.time.LocalDateTime
-import javax.persistence.*
+import java.time.OffsetDateTime
+import javax.persistence.Column
+import javax.persistence.MappedSuperclass
 
 
 @MappedSuperclass
@@ -14,9 +15,9 @@ abstract class BaseEntity : Serializable {
 
     @Column(updatable = false)
     @CreationTimestamp
-    val createdAt: LocalDateTime? = null
+    val createdAt: OffsetDateTime? = null
 
     @UpdateTimestamp
-     val updatedAt: LocalDateTime? = null
+    val updatedAt: OffsetDateTime? = null
 
 }
