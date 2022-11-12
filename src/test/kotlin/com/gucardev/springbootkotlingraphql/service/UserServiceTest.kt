@@ -1,9 +1,11 @@
 package com.gucardev.springbootkotlingraphql.service
 
+import com.gucardev.springbootkotlingraphql.converter.toUSER
 import com.gucardev.springbootkotlingraphql.exception.UserNotFoundException
 import com.gucardev.springbootkotlingraphql.model.Role
 import com.gucardev.springbootkotlingraphql.model.User
 import com.gucardev.springbootkotlingraphql.repository.UserRepository
+import com.gucardev.springbootkotlingraphql.request.UserCreateRequest
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -18,6 +20,7 @@ internal class UserServiceTest() {
 
     private val userRepository: UserRepository = mockk()
     private val userService: UserService = UserService(userRepository)
+
 
     @Test
     fun `should return users`() {
@@ -58,6 +61,16 @@ internal class UserServiceTest() {
         verify(exactly = 1) { userRepository.findById(anyLong()) }
         assertTrue(exceptionThrown)
 
+    }
+
+    @Test
+    fun `should create user and return it`() {
+        val userCreateRequest = UserCreateRequest(username = "gurkan", email = "mail1", role = Role.ADMIN)
+        val expected = User(id = 1L, username = "gurkan", email = "mail1", role = Role.ADMIN)
+        every { userRepository.save(userCreateRequest.toUSER()) }.returns(expected)
+        val actual = userService.createUser(userCreateRequest)
+        verify(exactly = 1) { userRepository.save(userCreateRequest.toUSER()) }
+        assertEquals(expected, actual)
     }
 
 }
