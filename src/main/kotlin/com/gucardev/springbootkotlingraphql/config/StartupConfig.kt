@@ -12,16 +12,16 @@ class StartupConfig(private val userService: UserService) : CommandLineRunner {
 
 
     override fun run(vararg args: String?) {
-        userService.createUser(
-            UserCreateRequest(
-                username = "grkn",
-                email = "mail1",
-                role = Role.ADMIN,
-                name = "gurkan",
-                surname = "ucar"
-            )
-        )
-        userService.createUser(UserCreateRequest(username = "ahmet", email = "mail2", role = Role.USER))
-        userService.createUser(UserCreateRequest(username = "mehmet", email = "mail3", role = Role.USER))
+//        userService.createUser(
+//            UserCreateRequest(
+//                username = "grkn",
+//                email = "mail1",
+//                role = Role.ADMIN,
+//                name = "gurkan",
+//                surname = "ucar"
+//            )
+//        )
+//        userService.createUser(UserCreateRequest(username = "ahmet", email = "mail2", role = Role.USER))
+//        userService.createUser(UserCreateRequest(username = "mehmet", email = "mail3", role = Role.USER))
     }
 }
