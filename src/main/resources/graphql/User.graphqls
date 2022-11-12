@@ -1,4 +1,4 @@
-scalar LocalTime
+scalar DateTime
 
 type Query {
     getAllUsers : [UserDTO]
@@ -14,8 +14,8 @@ type Mutation {
 type UserDTO {
     id: ID
     username: String
-    createdAt: LocalTime
-    updatedAt: LocalTime
+    createdAt: DateTime
+    updatedAt: DateTime
     email: String
     name: String
     surname: String
