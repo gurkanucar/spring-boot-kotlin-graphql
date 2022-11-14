@@ -19,9 +19,10 @@ import org.springframework.test.annotation.DirtiesContext
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @AutoConfigureGraphQlTester
-internal class UserControllerTest @Autowired constructor(
-    private val graphQlTester: GraphQlTester
+internal class UserControllerTest(
+    @Autowired private val graphQlTester: GraphQlTester
 ) {
+
 
     @BeforeEach
     fun setUp() {
@@ -63,6 +64,28 @@ internal class UserControllerTest @Autowired constructor(
     }
 
     @Test
+    fun `should get user by given id if user exists`() {
+
+        val query: String = """
+         query{
+              getByID(id: 1) {
+                id
+                username
+                createdAt
+                email
+                role
+              }
+         }
+     """
+
+        graphQlTester.document(query)
+            .execute()
+            .path("getByID")
+            .entity(UserDTO::class.java)
+
+    }
+
+    @Test
     fun `should create new user`() {
 
         val query: String = """
@@ -88,6 +111,7 @@ internal class UserControllerTest @Autowired constructor(
 
 
     }
+
 
     private fun createUser(user: UserCreateRequest) {
         val query: String = """
