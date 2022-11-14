@@ -1,6 +1,7 @@
 package com.gucardev.springbootkotlingraphql.controller
 
 import com.gucardev.springbootkotlingraphql.dto.UserDTO
+import com.gucardev.springbootkotlingraphql.exception.UserNotFoundException
 import com.gucardev.springbootkotlingraphql.model.Role
 import com.gucardev.springbootkotlingraphql.request.UserCreateRequest
 import org.junit.jupiter.api.BeforeEach
@@ -82,6 +83,27 @@ internal class UserControllerTest(
             .execute()
             .path("getByID")
             .entity(UserDTO::class.java)
+
+    }
+
+    @Test
+    fun `should throw error when get user by given id if user does not exist`() {
+
+        val query: String = """
+         query{
+              getByID(id: 3) {
+                id
+                username
+                createdAt
+                email
+                role
+              }
+         }
+     """
+
+        graphQlTester.document(query).execute().errors().filter {
+            it.message == "user not found!"
+        }.verify()
 
     }
 
